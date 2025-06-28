@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/topBar"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="#9932CD32"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:gravity="center_vertical"
+    android:elevation="4dp">
+
+    <!-- Language Icon -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/languageLogo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/java"
+        android:contentDescription="Selected Language"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:shapeAppearanceOverlay="@style/RoundedImageView" />
+
+    <!-- User Stats -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/xpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XP: 1200"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="24dp" />
+
+        <TextView
+            android:id="@+id/streakText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔥 5-day streak"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Logout Button -->
+    <ImageButton
+        android:id="@+id/logoutButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_logout"
+        android:background="@android:color/transparent"
+        android:contentDescription="Logout"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true" />
+</LinearLayout>

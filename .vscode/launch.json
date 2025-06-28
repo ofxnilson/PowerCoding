@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "PowercodingBackendApplication",
+            "request": "launch",
+            "mainClass": "com.powercoding.PowercodingBackendApplication",
+            "projectName": "backend"
+        },
+        {
+            "type": "java",
+            "name": "Launch Java Program",
+            "request": "launch",
+            "mainClass": ""
+        }
+    ]
+}
