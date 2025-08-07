@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.powercoding.LessonListActivity;
 import com.example.powercoding.R;
 import com.example.powercoding.api.AuthService;
 import com.example.powercoding.models.User;
@@ -29,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_PowerCoding_Splash); // switch from splash to main theme
         super.onCreate(savedInstanceState);
 
         SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
@@ -74,28 +72,44 @@ public class LoginActivity extends AppCompatActivity {
 
             AuthService api = ApiClient.getClient().create(AuthService.class);
             api.login(credentials).enqueue(new Callback<User>() {
+
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        User user = response.body();
-
-                        // Save login state if "Remember Me" is checked
-                        if (rememberMeCheckBox.isChecked()) {
-                            SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
-                            editor.putBoolean("isLoggedIn", true);
-                            editor.putLong("userId", user.getUserId());
-                            editor.putString("username", user.getUsername());
-                            editor.apply();
-                        }
-
-                        Toast.makeText(LoginActivity.this, "Welcome " + user.getUsername(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, LessonListActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Invalid login credentials", Toast.LENGTH_SHORT).show();
+                    if (!response.isSuccessful() || response.body() == null) {
+                        Toast.makeText(LoginActivity.this,
+                                "Invalid login credentials",
+                                Toast.LENGTH_SHORT).show();
+                        return;
                     }
+
+                    User user = response.body();
+                    Long id = user.getUserId();
+                    if (id == null) {
+                        Toast.makeText(LoginActivity.this,
+                                "Login failed: invalid user data",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    SharedPreferences.Editor editor =
+                            getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
+                    editor.putLong("userId", id);
+                    editor.putString("username", user.getUsername());
+                    if (rememberMeCheckBox.isChecked()) {
+                        editor.putBoolean("isLoggedIn", true);
+                    } else {
+                        editor.remove("isLoggedIn");
+                    }
+                    editor.apply();
+
+                    Toast.makeText(LoginActivity.this,
+                            "Welcome, " + user.getUsername(),
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, LessonListActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right,
+                            R.anim.slide_out_left);
+                    finish();
                 }
 
                 @Override

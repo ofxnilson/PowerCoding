@@ -1,8 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Zig-zag lesson bubbles in the main screen --><LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bubbleContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="12dp"
+    android:layout_height="120dp"
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
@@ -11,35 +12,51 @@
         android:id="@+id/leftSpace"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
-    <!-- The bubble itself -->
+    <!-- Bubble+title vertical -->
     <LinearLayout
-        android:id="@+id/bubble"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <FrameLayout
+            android:id="@+id/bubbleFrame"
             android:layout_width="64dp"
             android:layout_height="64dp">
+
+            <!-- Ring and triangle background -->
+            <ImageView
+                android:id="@+id/lessonIconBg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/bubble_background_locked" />
+
+            <!-- Bubble icon -->
             <ImageView
                 android:id="@+id/lessonIcon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_lesson"
-                android:background="@drawable/bubble_background_active"
-                android:scaleType="centerInside"/>
+                android:scaleType="centerInside"
+                android:visibility="visible" />
+
+            <!-- Locker icon -->
             <ImageView
                 android:id="@+id/lockIcon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_lock"
-                android:visibility="gone"/>
+                android:scaleType="center"
+                android:alpha="0.5"
+                android:visibility="gone" />
         </FrameLayout>
 
+        <!-- Lesson title -->
         <TextView
             android:id="@+id/lessonTitle"
             android:layout_width="wrap_content"
@@ -47,9 +64,9 @@
             android:text="Lesson"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:gravity="center"
-            android:layout_marginTop="6dp"/>
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 
     <!-- Right spacer for left-aligned bubbles -->
@@ -57,5 +74,5 @@
         android:id="@+id/rightSpace"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 </LinearLayout>

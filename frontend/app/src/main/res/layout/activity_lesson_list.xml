@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    android:fitsSystemWindows="true"
-    android:paddingTop="16dp"> <!-- Pushes UI below system bar -->
+    android:fitsSystemWindows="true">
 
-    <!-- Reusable Top Bar -->
-    <include layout="@layout/top_bar" />
+    <include
+        layout="@layout/top_bar"
+        android:id="@+id/includeTopBar"/>
 
     <!-- Lesson bubbles list -->
     <androidx.recyclerview.widget.RecyclerView

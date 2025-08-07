@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.powercoding.model.Lesson;
 
+
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
-    List<Lesson> findByLanguage(String language);
+    List<Lesson> findByLanguageIgnoreCase(String language);
 }
+

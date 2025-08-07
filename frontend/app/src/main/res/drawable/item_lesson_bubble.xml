@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Space
+            android:id="@+id/leftSpace"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <FrameLayout
+            android:id="@+id/bubbleFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Background Bubble -->
+            <ImageView
+                android:id="@+id/lessonIconBg"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bubble_background_locked"/>
+
+            <!-- Lesson Icon -->
+            <ImageView
+                android:id="@+id/lessonIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"/>
+
+            <!-- Lock Icon -->
+            <ImageView
+                android:id="@+id/lockIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|end"
+                android:src="@drawable/ic_lock"
+                android:visibility="gone"/>
+
+        </FrameLayout>
+
+        <Space
+            android:id="@+id/rightSpace"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lessonTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginTop="110dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+</FrameLayout>

@@ -1,6 +1,5 @@
 package com.example.powercoding.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
 
@@ -27,7 +26,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Register back gesture callback
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -68,7 +66,16 @@ public class RegisterActivity extends AppCompatActivity {
                         finish();
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                        // Show error body for debugging!
+                        String errorMessage = "Registration failed";
+                        try {
+                            if (response.errorBody() != null) {
+                                errorMessage = response.errorBody().string();
+                            }
+                        } catch (Exception e) {
+                            errorMessage = e.getMessage();
+                        }
+                        Toast.makeText(RegisterActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 }
 

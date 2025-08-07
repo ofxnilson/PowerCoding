@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.PowerCoding.Splash" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Background color of the splash screen -->
-        <item name="android:windowBackground">@color/white</item>
-
-        <!-- Center icon shown on splash -->
-        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/power_coding</item>
-
-        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/white
-        </item>
-
-        <!-- Remove default android branding -->
-        <item name="android:windowSplashScreenBrandingImage" tools:ignore="MissingPrefix">
-            @null
-        </item>
+    <!-- The one-and-only app theme, AppCompat-based -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- your colors -->
+        <item name="android:colorPrimary">@color/green_500</item>
+        <item name="android:colorPrimaryDark">@color/green_700</item>
+        <item name="android:colorAccent">@color/teal_200</item>
+        <!-- no title bar -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
     </style>
-    <style name="Theme.PowerCoding" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/green_500</item>
-        <item name="colorPrimaryDark">@color/green_700</item>
-        <item name="colorAccent">@color/teal_200</item>
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-    </style>
+
 </resources>
+

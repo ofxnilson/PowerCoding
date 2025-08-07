@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/top_bar"
+        android:id="@+id/includeTopBar"/>
+    
+    <!-- Progress -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="12dp"
+            android:layout_weight="1"
+            android:progress="0"
+            android:max="5"
+            android:progressDrawable="@drawable/progress_bar_custom" />
+
+    </LinearLayout>
+
+    <!-- Question Prompt -->
+    <TextView
+        android:id="@+id/questionPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Question appears here"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="24dp"
+        android:textColor="#222" />
+
+    <!-- Fill space -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- IDE‑style input + run button -->
+    <LinearLayout
+        android:id="@+id/inputBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="bottom">
+
+        <EditText
+            android:id="@+id/codeInput"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_edittext_bg"
+            android:hint="Type your answer"
+            android:paddingStart="16dp"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/submitBtn"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/button_run_white"
+            android:src="@drawable/ic_run"
+            android:contentDescription="Run"
+            android:scaleType="center"
+            app:tint="#1976D2" />
+    </LinearLayout>
+
+    <!-- Answer status -->
+    <TextView
+        android:id="@+id/answerStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:text=""
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:textColor="#333"/>
+</LinearLayout>

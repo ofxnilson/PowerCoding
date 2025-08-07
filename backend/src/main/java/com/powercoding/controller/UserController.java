@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private UserRepository repo;
 
-    @PostMapping("/register")
+    @PostMapping("/register") 
     public User register(@RequestBody User user) {
         return repo.save(user);
     }
@@ -33,7 +33,7 @@ public class UserController {
         String password = data.get("password");
 
         if (email == null || password == null) {
-            return ResponseEntity.badRequest().body("Email and password must be provided");
+            return ResponseEntity.badRequest().body("Email and password must be entered!");
         }
 
         User user = repo.findByEmail(email.trim());
@@ -41,6 +41,6 @@ public class UserController {
             return ResponseEntity.ok(user);
         }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Email or Password.\n Please try again!");
     }
 }
