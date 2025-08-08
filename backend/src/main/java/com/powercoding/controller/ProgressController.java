@@ -1,10 +1,13 @@
 package com.powercoding.controller;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,7 @@ import com.powercoding.model.User;
 import com.powercoding.repository.ProgressRepository;
 import com.powercoding.repository.UserRepository;
 
+
 @RestController
 @RequestMapping("/api/progress")
 @CrossOrigin(origins = "*")
@@ -31,16 +35,16 @@ public class ProgressController {
     private ProgressRepository progressRepo;
 
     @Autowired
-    private UserRepository userRepo;
+    private UserRepository userRepository;
 
-    // --- 1. GET Progress ---
+    // GET Progress
     @GetMapping("/{userId}/{language}")
     public ProgressResponse getProgress(@PathVariable Long userId, @PathVariable String language) {
-    // 1. Check if user exists
-    User user = userRepo.findById(userId)
+    // Check if user exists
+    User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-    // 2. Find or create progress
+    // Find or create progress
     Progress progress = progressRepo.findByUserIdAndLanguage(userId, language)
             .orElseGet(() -> {
                 Progress p = new Progress(user, language);
@@ -55,36 +59,46 @@ public class ProgressController {
     return convertToResponse(progress);
 }
 
-    // --- 2. POST: Universal Save/Upsert Progress (NEW!) ---
-    @PostMapping
-    public ProgressResponse saveProgress(@RequestBody ProgressResponse req) {
-        // Find or create user and progress
-        User user = userRepo.findById(req.getUserId())
+    // POST: save progress
+        @PostMapping("/save")
+    public ResponseEntity<?> saveProgress(@RequestBody ProgressResponse progressResponse) {
+        System.out.println("PROGRESS SAVE: " + progressResponse);
+        User user = userRepository.findById(progressResponse.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Progress progress = progressRepo.findByUserAndLanguage(user, req.getLanguage())
-                .orElse(new Progress(user, req.getLanguage()));
+        // Try to find existing progress for this user+language
+        Optional<Progress> optional = progressRepo.findByUserAndLanguage(user, progressResponse.getLanguage());
 
-        // Set all fields from request
-        progress.setXp(req.getXp());
-        progress.setStreak(req.getStreak());
-        progress.setLives(req.getLives());
-
-        if (req.getLivesTimestamp() != 0L) {
-            progress.setLivesTimestamp(LocalDateTime.ofInstant(
-                    java.time.Instant.ofEpochMilli(req.getLivesTimestamp()), ZoneId.systemDefault()));
-        }
-        if (req.getLastActivityDate() != 0L) {
-            progress.setLastActivityDate(LocalDateTime.ofInstant(
-                    java.time.Instant.ofEpochMilli(req.getLastActivityDate()), ZoneId.systemDefault()));
+        Progress progress;
+        if (optional.isPresent()) {
+            progress = optional.get();
+        } else {
+            progress = new Progress();
+            progress.setUser(user);
+            progress.setLanguage(progressResponse.getLanguage());
         }
 
-        // Save and return response
+        // Update fields
+        progress.setXp(progressResponse.getXp());
+        progress.setStreak(progressResponse.getStreak());
+        progress.setLives(progressResponse.getLives());
+        progress.setLessonProgress(progressResponse.getLessonProgress());
+        progress.setLivesTimestamp(LocalDateTime.ofInstant(
+            Instant.ofEpochMilli(progressResponse.getLivesTimestamp()), ZoneId.systemDefault()
+            )
+        );
+        progress.setLastActivityDate(LocalDateTime.ofInstant(
+            Instant.ofEpochMilli(progressResponse.getLastActivityDate()),
+            ZoneId.systemDefault()
+            )
+        );
+
         progressRepo.save(progress);
-        return convertToResponse(progress);
+        return ResponseEntity.ok().build();
     }
 
-    // --- 3. POST: Update Activity/Handle Streaks ---
+
+    // POST: Update Activity/Handle Streaks 
     @PostMapping("/update-activity")
     public ProgressResponse updateActivity(
             @RequestParam Long userId,
@@ -115,7 +129,7 @@ public class ProgressController {
         return convertToResponse(progress);
     }
 
-    // --- 4. POST: Use a life ---
+    // POST: Use a life 
     @PostMapping("/use-life")
     public ProgressResponse useLife(
             @RequestParam Long userId,
@@ -133,9 +147,9 @@ public class ProgressController {
         return convertToResponse(progress);
     }
 
-    // --- Helper: Upsert progress by userId/language ---
+    // Helper: Upsert progress by userId/language
     private Progress getOrCreateProgress(Long userId, String language) {
-    User user = userRepo.findById(userId)
+    User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found"));
 
     return progressRepo.findByUserAndLanguage(user, language)
@@ -150,7 +164,7 @@ public class ProgressController {
 }
 
 
-    // --- Helper: Replenish lives if enough time has passed ---
+    //Helper: Replenish lives if enough time has passed
     private void checkAndReplenishLives(Progress progress) {
         if (progress.getLives() >= MAX_LIVES) return;
 
@@ -172,7 +186,7 @@ public class ProgressController {
         }
     }
 
-    // --- Helper: Convert Progress to ProgressResponse for the app ---
+    // Helper: Convert Progress to ProgressResponse for the app 
     private ProgressResponse convertToResponse(Progress progress) {
         ProgressResponse response = new ProgressResponse();
         response.setUserId(progress.getUser().getId());
@@ -180,6 +194,7 @@ public class ProgressController {
         response.setXp(progress.getXp());
         response.setStreak(progress.getStreak());
         response.setLives(progress.getLives());
+        response.setLessonProgress(progress.getLessonProgress());
 
         if (progress.getLivesTimestamp() != null) {
             response.setLivesTimestamp(progress.getLivesTimestamp()

@@ -29,16 +29,19 @@ public class Progress {
 
     @Column(nullable = false)
     private String language;
-    
-    private int xp = 0;  
-    private int streak = 0;
-    private int lives = 5;
-    
+
+    @Column(name = "lesson_progress")
+    private int lessonProgress = 0;
+
     @Column(name = "lives_timestamp")
     private LocalDateTime livesTimestamp;
     
     @Column(name = "last_activity_date")
     private LocalDateTime lastActivityDate;
+    
+    private int xp = 0;  
+    private int streak = 0;
+    private int lives = 5;
     
     // Constructors
     public Progress() {
@@ -111,5 +114,14 @@ public class Progress {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+     
+    public int getLessonProgress() {
+        return lessonProgress;
+    }
+
+    public void setLessonProgress(int lessonProgress) {
+        this.lessonProgress = lessonProgress;
     }
 }

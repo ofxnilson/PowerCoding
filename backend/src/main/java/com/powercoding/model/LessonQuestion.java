@@ -29,7 +29,8 @@ public class LessonQuestion {
     @JsonBackReference
     private Lesson lesson;
 
-    public LessonQuestion() {}
+    public LessonQuestion() {
+    }
 
     public LessonQuestion(String question, String answer, Lesson lesson) {
         this.question = question;

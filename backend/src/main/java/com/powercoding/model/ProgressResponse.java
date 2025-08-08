@@ -9,6 +9,7 @@ public class ProgressResponse {
     private int lives;
     private long livesTimestamp;
     private long lastActivityDate;
+    private int lessonProgress = 0;
 
     public Long getUserId() {
         return userId;
@@ -65,5 +66,12 @@ public class ProgressResponse {
     public void setLastActivityDate(long lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
     }
+     
+    public int getLessonProgress() {
+        return lessonProgress;
+    }
 
+    public void setLessonProgress(int lessonProgress) {
+        this.lessonProgress = lessonProgress;
+    }
 }

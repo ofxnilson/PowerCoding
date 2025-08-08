@@ -6,6 +6,9 @@ public class ProgressResponse {
     private int xp;
     private int streak;
     private int lives;
+    private int lessonProgress;
+    private long livesTimestamp;
+    private long lastActivityDate;
 
     public Long getUserId() {
         return userId;
@@ -19,7 +22,7 @@ public class ProgressResponse {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(String language){
         this.language = language;
     }
 
@@ -62,9 +65,13 @@ public class ProgressResponse {
     public void setLastActivityDate(long lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
     }
+    public int getLessonProgress() {
+        return lessonProgress;
+    }
+    public void setLessonProgress(int lessonProgress) {
+        this.lessonProgress = lessonProgress;
+    }
 
-    private long livesTimestamp;
-    private long lastActivityDate;
 
 
 }

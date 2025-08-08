@@ -7,6 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface LessonService {
-    @GET("api/lessons/{language}")
+    @GET("lessons/{language}")
     Call<List<Lesson>> getLessonsByLanguage(@Path("language") String language);
 }

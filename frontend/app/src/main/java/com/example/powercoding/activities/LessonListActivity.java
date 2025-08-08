@@ -147,10 +147,16 @@ public class LessonListActivity extends AppCompatActivity {
                                     .putInt("xp_" + currentLanguage.toLowerCase(), pr.getXp())
                                     .putInt(KEY_STREAK, pr.getStreak())
                                     .putInt(KEY_LIVES, pr.getLives())
+                                    // This is the IMPORTANT LINE:
+                                    .putInt("lesson_progress_" + currentLanguage.toLowerCase(), pr.getLessonProgress())
                                     .apply();
 
                             // Update the top bar
                             updateTopBarStats();
+
+                            // Update lesson bubbles from progress (ensure UI matches server state!)
+                            updateLessonStates(pr.getLessonProgress());
+                            lessonAdapter.notifyDataSetChanged();
                         }
                     }
                     @Override
@@ -185,7 +191,7 @@ public class LessonListActivity extends AppCompatActivity {
                             for (Lesson lesson : lessonList) {
                                 switch (lesson.getTitle()) {
                                     case "Basics":
-                                        lesson.setIconResId(R.drawable.ic_lesson); // Use your code icon resource
+                                        lesson.setIconResId(R.drawable.ic_lesson);
                                         break;
                                     case "Variables":
                                         lesson.setIconResId(R.drawable.ic_lesson);
@@ -200,10 +206,10 @@ public class LessonListActivity extends AppCompatActivity {
                                         lesson.setIconResId(R.drawable.ic_lesson);
                                         break;
                                     case "Advanced":
-                                        lesson.setIconResId(R.drawable.ic_unlocked_triangle); // The triangle icon for the last bubble
+                                        lesson.setIconResId(R.drawable.ic_unlocked_triangle);
                                         break;
                                     default:
-                                        lesson.setIconResId(R.drawable.ic_lesson); // Default/fallback icon
+                                        lesson.setIconResId(R.drawable.ic_lesson);
                                 }
                             }
                             int prog = getSharedPreferences(PREF_NAME, MODE_PRIVATE)

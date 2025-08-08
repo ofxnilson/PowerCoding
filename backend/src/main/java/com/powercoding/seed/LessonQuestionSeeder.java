@@ -113,7 +113,7 @@ public class LessonQuestionSeeder implements CommandLineRunner {
             new LessonQuestion("5) Method with return?\nA) return x;\nB) give x;\nC) yield x;", "return x;", functions)
         );
 
-        // --- Save Questions ---
+        // Save Questions
         lessonQuestionRepository.saveAll(basicsQuestions);
         lessonQuestionRepository.saveAll(variableQuestions);
         lessonQuestionRepository.saveAll(conditionalQuestions);

@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                         finish();
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                     } else {
-                        // Show error body for debugging!
+                        // Show error body for debugging
                         String errorMessage = "Registration failed";
                         try {
                             if (response.errorBody() != null) {

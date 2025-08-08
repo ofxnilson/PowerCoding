@@ -35,14 +35,6 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
     private List<LessonQuestion> questions = new ArrayList<>();
 
-    public List<LessonQuestion> getQuestions() { 
-        return questions; 
-    }
-
-    public void setQuestions(List<LessonQuestion> questions) { 
-        this.questions = questions; 
-    }
-
     public Lesson() {
     }
 
@@ -62,7 +54,7 @@ public class Lesson {
     }
 
     public Long getLessonId() {
-        return lessonId;
+                return lessonId;
     }
 
     public void setLessonId(Long lessonId) {
@@ -101,12 +93,20 @@ public class Lesson {
         this.unlocked = unlocked;
     }
 
-        public int getIconResId() {
+    public int getIconResId() {
         return iconResId;
     }
 
     public void setIconResId(int iconResId) {
         this.iconResId = iconResId;
+    }
+
+    public List<LessonQuestion> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<LessonQuestion> questions) {
+        this.questions = questions;
     }
 
 }

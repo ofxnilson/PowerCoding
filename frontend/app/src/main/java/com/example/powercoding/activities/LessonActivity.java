@@ -345,6 +345,7 @@ public class LessonActivity extends AppCompatActivity {
         pr.setLives(prefs.getInt(KEY_LIVES,    5));
         pr.setLivesTimestamp(prefs.getLong(KEY_LIVES_TS, System.currentTimeMillis()));
         pr.setLastActivityDate(prefs.getLong("lastActivityDate_" + lessonLang.toLowerCase(), 0L));
+        pr.setLessonProgress(prefs.getInt("lesson_progress_" + lessonLang.toLowerCase(), 0)); // <-- ADD THIS LINE
 
         progressService.saveProgress(pr).enqueue(new Callback<Void>() {
             @Override
@@ -374,6 +375,8 @@ public class LessonActivity extends AppCompatActivity {
         pr.setLives(prefs.getInt(KEY_LIVES,    5));
         pr.setLivesTimestamp(prefs.getLong(KEY_LIVES_TS, System.currentTimeMillis()));
         pr.setLastActivityDate(prefs.getLong("lastActivityDate_" + lessonLang.toLowerCase(), 0L));
+        pr.setLessonProgress(prefs.getInt("lesson_progress_" + lessonLang.toLowerCase(), 0));
+
 
         progressService.saveProgress(pr).enqueue(new Callback<Void>() {
             @Override
